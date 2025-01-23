@@ -1,3 +1,7 @@
+# Initial setup
+
+https://blog.bitsrc.io/create-react-app-without-create-react-app-b0a5806a92
+
 # Syntax Formatting
 
 To add syntax autoformatting in your React application, you can use tools like Prettier and ESLint. Here are the steps to set them up in your project:
