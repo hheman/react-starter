@@ -7,14 +7,12 @@ const Nav = () => {
     <nav>
       <ul>
         <li>
-          <NavLink exact to="/" activeClassName="active">
+          <NavLink exact="true" to="/">
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/items" activeClassName="active">
-            Items
-          </NavLink>
+          <NavLink to="/items">Items</NavLink>
         </li>
         <li>
           <LogoutButton />

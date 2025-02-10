@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types';
 import ItemsService from './../services/items';
 
 const ItemsList = ({ count }) => {
+  const navigate = useNavigate();
   const [items, setItems] = useState([]);
+  const handleClick = ({ id }) => {
+    navigate(`/items/${id}`);
+  };
+
   useEffect(() => {
     const fetchItems = async () => {
       const itemsService = new ItemsService();
@@ -18,7 +24,9 @@ const ItemsList = ({ count }) => {
       {items.length ? (
         <ul>
           {items.map((item) => (
-            <li key={item.id}>{item.name}</li>
+            <li key={item.id} onClick={() => handleClick(item)}>
+              {item.name}
+            </li>
           ))}
         </ul>
       ) : (
@@ -29,7 +37,7 @@ const ItemsList = ({ count }) => {
 };
 
 ItemsList.propTypes = {
-  count: PropTypes.number.optional,
+  count: PropTypes.number,
 };
 
 export default ItemsList;

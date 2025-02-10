@@ -29,7 +29,12 @@ class ItemsService {
   }
 
   async fetchItemById(id) {
-    return await this.api.get(`/items/${id}`);
+    return await new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({ id, name: `Item ${id}` });
+      }, 100);
+    });
+    // return await this.api.get(`/items/${id}`);
   }
 
   async createItem(data) {

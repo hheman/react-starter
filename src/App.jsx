@@ -7,6 +7,7 @@ import LoginLayout from './layouts/LoginLayout';
 import { useAuth } from './AuthenticationProvider';
 import { useNavigate } from 'react-router';
 import ItemsList from './ItemsList';
+import ItemNote from './ItemNote';
 
 const App = () => {
   return <AllRoutes />;
@@ -33,8 +34,7 @@ const AllRoutes = () => {
 
         <Route path="items">
           <Route index element={<ItemsList />} />
-          {/* <Route path=":itemId" element={<City />} /> */}
-          {/* <Route path="trending" element={<Trending />} /> */}
+          <Route path=":itemId" element={<ItemNote />} />
         </Route>
       </Route>
     </Routes>
