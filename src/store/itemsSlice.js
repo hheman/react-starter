@@ -2,9 +2,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import ItemsService from '../services/items';
 
-export const fetchItems = createAsyncThunk('items/fetchItems', async () => {
-  return await new ItemsService().fetchItems();
-});
+export const fetchItems = createAsyncThunk(
+  'items/fetchItems',
+  async ({ count }) => {
+    return await new ItemsService().fetchItems({ count });
+  }
+);
 
 export const fetchItem = createAsyncThunk(
   'items/fetchItem',
