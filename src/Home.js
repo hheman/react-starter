@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Heading from './Heading';
-import { useAuth } from './AuthenticationProvider';
 import ItemsService from './../services/items';
 
 const Home = () => {
@@ -20,7 +19,6 @@ const Home = () => {
       <p>
         Welcome to React App thats build using Webpack and Babel separately.
       </p>
-      <LogoutButton />
       {items.length ? (
         <ul>
           {items.map((item) => (
@@ -32,11 +30,6 @@ const Home = () => {
       )}
     </>
   );
-};
-
-const LogoutButton = () => {
-  const { logout } = useAuth();
-  return <button onClick={() => logout()}>Log out</button>;
 };
 
 export default Home;
