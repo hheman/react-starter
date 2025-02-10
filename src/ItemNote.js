@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
-import ItemsService from './../services/items';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchItem } from './store/itemsSlice';
 
 const ItemNote = () => {
   const { itemId } = useParams();
-  const [data, setData] = useState(null);
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.items.selectedItem);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await new ItemsService().fetchItemById(itemId);
-        setData(res);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    if (itemId) fetchData();
+    dispatch(fetchItem({ itemId }));
   }, [itemId]);
 
   return <div>{data ? <p>{data.name}</p> : <p>Loading...</p>}</div>;

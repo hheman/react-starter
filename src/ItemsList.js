@@ -1,22 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import ItemsService from './../services/items';
+import { fetchItems } from './store/itemsSlice';
 
 const ItemsList = ({ count }) => {
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.items.items);
   const handleClick = ({ id }) => {
     navigate(`/items/${id}`);
   };
 
   useEffect(() => {
-    const fetchItems = async () => {
-      const itemsService = new ItemsService();
-      const items = await itemsService.fetchItems({ count });
-      setItems(items);
-    };
-    fetchItems();
+    dispatch(fetchItems({ count }));
   }, []);
 
   return (

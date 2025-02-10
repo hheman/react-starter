@@ -30,7 +30,9 @@ class ItemsService {
 
   async fetchItemById(id) {
     return await new Promise((resolve, reject) => {
-      resolve({ id, name: `Item ${id}` });
+      setTimeout(() => {
+        resolve({ id, name: `Item ${id}` });
+      }, 500);
     });
     // return await this.api.get(`/items/${id}`);
   }
