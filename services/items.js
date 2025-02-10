@@ -23,16 +23,14 @@ class ItemsService {
             { id: 10, name: 'Item 10' },
           ].slice(0, params.count || 10)
         );
-      }, 1000);
+      }, 500);
     });
     // return await this.api.get('/items', params);
   }
 
   async fetchItemById(id) {
     return await new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve({ id, name: `Item ${id}` });
-      }, 100);
+      resolve({ id, name: `Item ${id}` });
     });
     // return await this.api.get(`/items/${id}`);
   }

@@ -23,6 +23,7 @@ module.exports = {
      * the name of the output file
      */
     filename: 'main.js',
+    publicPath: '/',
   },
   /** "target"
    * setting "node" as target app (server side), and setting it as "web" is
@@ -52,6 +53,7 @@ module.exports = {
      * disable live reload on the browser. "hot" must be set to false for this to work
      */
     liveReload: true,
+    historyApiFallback: true,
   },
   resolve: {
     /** "extensions"

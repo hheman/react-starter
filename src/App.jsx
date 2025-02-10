@@ -18,7 +18,7 @@ const AllRoutes = () => {
   let navigate = useNavigate();
 
   useEffect(() => {
-    !token ? navigate('/login') : navigate('/');
+    if (!token) navigate('/login');
   }, [token]);
 
   return (
