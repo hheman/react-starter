@@ -6,6 +6,7 @@ import Layout from './layouts/Layout';
 import LoginLayout from './layouts/LoginLayout';
 import { useAuth } from './AuthenticationProvider';
 import { useNavigate } from 'react-router';
+import ItemsList from './ItemsList';
 
 const App = () => {
   return <AllRoutes />;
@@ -21,19 +22,20 @@ const AllRoutes = () => {
 
   return (
     <Routes>
-      <Route path="login" element={<LoginLayout />}>
-        <Route index element={<Login />} />
-      </Route>
+      {!token && (
+        <Route path="login" element={<LoginLayout />}>
+          <Route index element={<Login />} />
+        </Route>
+      )}
 
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        {/* <Route path="about" element={<About />} /> */}
 
-        {/* <Route path="items">
-            <Route index element={<ConcertsHome />} />
-            <Route path=":itemId" element={<City />} />
-            <Route path="trending" element={<Trending />} />
-          </Route> */}
+        <Route path="items">
+          <Route index element={<ItemsList />} />
+          {/* <Route path=":itemId" element={<City />} /> */}
+          {/* <Route path="trending" element={<Trending />} /> */}
+        </Route>
       </Route>
     </Routes>
   );
