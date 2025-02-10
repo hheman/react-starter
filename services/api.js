@@ -1,69 +1,77 @@
-const baseURL = 'https://api.example.com'; // Replace with your API base URL
-const defaultHeaders = {
-  'Content-Type': 'application/json',
-};
-
-export const get = async (url, params = {}) => {
-  try {
-    const queryString = new URLSearchParams(params).toString();
-    const response = await fetch(`${baseURL}${url}?${queryString}`, {
-      method: 'GET',
-      headers: defaultHeaders,
-    });
-    return await handleResponse(response);
-  } catch (error) {
-    handleError(error);
+class Api {
+  constructor(baseURL) {
+    this.baseURL = baseURL;
+    this.defaultHeaders = {
+      'Content-Type': 'application/json',
+    };
   }
-};
 
-export const post = async (url, data) => {
-  try {
-    const response = await fetch(`${baseURL}${url}`, {
-      method: 'POST',
-      headers: defaultHeaders,
-      body: JSON.stringify(data),
-    });
-    return await handleResponse(response);
-  } catch (error) {
-    handleError(error);
+  async handleResponse(response) {
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message);
+    }
+    return response.json();
   }
-};
 
-export const put = async (url, data) => {
-  try {
-    const response = await fetch(`${baseURL}${url}`, {
-      method: 'PUT',
-      headers: defaultHeaders,
-      body: JSON.stringify(data),
-    });
-    return await handleResponse(response);
-  } catch (error) {
-    handleError(error);
+  handleError(error) {
+    console.error('API call failed. ', error);
+    throw error;
   }
-};
 
-export const del = async (url) => {
-  try {
-    const response = await fetch(`${baseURL}${url}`, {
-      method: 'DELETE',
-      headers: defaultHeaders,
-    });
-    return await handleResponse(response);
-  } catch (error) {
-    handleError(error);
+  async get(url, params = {}) {
+    try {
+      const queryString = new URLSearchParams(params).toString();
+      const response = await fetch(
+        `${this.baseURL}${url}${queryString && '?'}${queryString}`,
+        {
+          method: 'GET',
+          headers: this.defaultHeaders,
+        }
+      );
+      return await this.handleResponse(response);
+    } catch (error) {
+      this.handleError(error);
+    }
   }
-};
 
-const handleResponse = async (response) => {
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'API call failed');
+  async post(url, data) {
+    try {
+      const response = await fetch(`${this.baseURL}${url}`, {
+        method: 'POST',
+        headers: this.defaultHeaders,
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      this.handleError(error);
+    }
   }
-  return response.json();
-};
 
-const handleError = (error) => {
-  // Handle error appropriately
-  console.error('API call failed. ', error);
-  throw error;
-};
+  async put(url, data) {
+    try {
+      const response = await fetch(`${this.baseURL}${url}`, {
+        method: 'PUT',
+        headers: this.defaultHeaders,
+        body: JSON.stringify(data),
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  async del(url) {
+    try {
+      const response = await fetch(`${this.baseURL}${url}`, {
+        method: 'DELETE',
+        headers: this.defaultHeaders,
+      });
+      return await this.handleResponse(response);
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+}
+
+export default Api;
