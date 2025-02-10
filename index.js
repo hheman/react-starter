@@ -1,9 +1,12 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import App from "./src/App"
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './src/App';
+import { AuthenticationProvider } from './src/AuthenticationProvider';
 
-createRoot(document.getElementById("root")).render(
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <AuthenticationProvider>
+      <App />
+    </AuthenticationProvider>
   </React.StrictMode>
 );
