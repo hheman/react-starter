@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router';
+import { useCookies } from 'react-cookie';
 import Home from './Home';
 import Login from './Login';
 import Layout from './layouts/Layout';
 import LoginLayout from './layouts/LoginLayout';
 import { useAuth } from './AuthenticationProvider';
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate, useLocation } from 'react-router';
 import ItemsList from './ItemsList';
 import ItemNote from './ItemNote';
 
@@ -15,10 +16,15 @@ const App = () => {
 
 const AllRoutes = () => {
   const { token } = useAuth();
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [, setCookie] = useCookies(['postLoginRedirect']);
 
   useEffect(() => {
-    if (!token) navigate('/login');
+    if (!token) {
+      setCookie('postLoginRedirect', location.pathname, { path: '/' });
+      navigate('/login');
+    }
   }, [token]);
 
   return (
@@ -37,6 +43,7 @@ const AllRoutes = () => {
           <Route path=":itemId" element={<ItemNote />} />
         </Route>
       </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

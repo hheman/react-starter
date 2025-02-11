@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { useAuth } from './AuthenticationProvider';
+import { useNavigate } from 'react-router';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
+  const navigate = useNavigate();
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [cookie] = useCookies(['postLoginRedirect']);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     login({ username: email, password });
+    const redirectPath = cookie.postLoginRedirect || '/';
+    navigate(redirectPath);
   };
 
   return (
